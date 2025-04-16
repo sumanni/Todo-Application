@@ -1,9 +1,8 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function Register() {
-  // State for form fields
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -11,15 +10,11 @@ function Register() {
     confirmPassword: "",
   });
 
-  // The changes in state for error message
   const [error, setError] = useState("");
-
-  // Shows success message
   const [successMessage, setSuccessMessage] = useState("");
 
-  const navigate = useNavigate(); // Using useNavigate for navigation
+  const navigate = useNavigate();
 
-  // It is to handle form data changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -28,42 +23,36 @@ function Register() {
     }));
   };
 
-  // This part is for form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const { password, confirmPassword } = formData;
 
-    // To check if passwords match
     if (password !== confirmPassword) {
       setError("Passwords do not match");
       return;
     }
 
     try {
-      // it sends POST request to backedn so new user can be registered
       const response = await axios.post(
         "http://localhost:5000/register",
         formData
       );
 
-      // If registration is successful, show success message and redirect
       setSuccessMessage(response.data.msg);
-      setError(""); // Clear any previous error message
+      setError("");
 
-      // Redirect to login page after successful registration
       setTimeout(() => {
-        navigate("/"); // Redirect to the login page using useNavigate
-      }, 2000); // Delay of 2 seconds before redirecting
+        navigate("/");
+      }, 2000);
     } catch (err) {
-      // Handle errors if any (e.g., user already exists)
       setError(err.response ? err.response.data.msg : "Server error");
-      setSuccessMessage(""); // Clear any success message
+      setSuccessMessage("");
     }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100 px-4">
+    <div className="flex items-center justify-center min-h-screen bg-sky-100 px-4">
       <div className="bg-white p-10 rounded-3xl shadow-2xl w-full max-w-xl">
         <h2 className="text-3xl font-bold mb-8 text-center text-gray-800">
           Create a New Account
@@ -75,7 +64,7 @@ function Register() {
             placeholder="Full Name"
             value={formData.username}
             onChange={handleChange}
-            className="w-full px-5 py-3 border text-lg rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-5 py-3 border text-lg rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400"
           />
           <input
             type="email"
@@ -83,7 +72,7 @@ function Register() {
             placeholder="Email"
             value={formData.email}
             onChange={handleChange}
-            className="w-full px-5 py-3 border text-lg rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-5 py-3 border text-lg rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400"
           />
           <input
             type="password"
@@ -91,7 +80,7 @@ function Register() {
             placeholder="Password"
             value={formData.password}
             onChange={handleChange}
-            className="w-full px-5 py-3 border text-lg rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-5 py-3 border text-lg rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400"
           />
           <input
             type="password"
@@ -99,7 +88,7 @@ function Register() {
             placeholder="Confirm Password"
             value={formData.confirmPassword}
             onChange={handleChange}
-            className="w-full px-5 py-3 border text-lg rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-5 py-3 border text-lg rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400"
           />
           {error && <p className="text-red-500 text-sm">{error}</p>}
           {successMessage && (
@@ -107,14 +96,14 @@ function Register() {
           )}
           <button
             type="submit"
-            className="w-full bg-green-600 text-white text-lg py-3 rounded-xl hover:bg-green-700 transition"
+            className="w-full bg-green-400 text-white text-lg py-3 rounded-xl hover:bg-green-500 transition"
           >
             Register
           </button>
         </form>
         <p className="mt-6 text-md text-center text-gray-600">
           Already have an account?{" "}
-          <Link to="/" className="text-blue-500 hover:underline">
+          <Link to="/" className="text-sky-500 hover:underline">
             Login
           </Link>
         </p>
