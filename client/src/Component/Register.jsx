@@ -11,15 +11,15 @@ function Register() {
     confirmPassword: "",
   });
 
-  // State for error message
+  // The changes in state for error message
   const [error, setError] = useState("");
 
-  // State for success message
+  // Shows success message
   const [successMessage, setSuccessMessage] = useState("");
 
   const navigate = useNavigate(); // Using useNavigate for navigation
 
-  // Handle form data changes
+  // It is to handle form data changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -28,20 +28,20 @@ function Register() {
     }));
   };
 
-  // Handle form submission
+  // This part is for form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const { password, confirmPassword } = formData;
 
-    // Check if passwords match
+    // To check if passwords match
     if (password !== confirmPassword) {
       setError("Passwords do not match");
       return;
     }
 
     try {
-      // Send POST request to the backend to register the user
+      // it sends POST request to backedn so new user can be registered
       const response = await axios.post(
         "http://localhost:5000/register",
         formData
